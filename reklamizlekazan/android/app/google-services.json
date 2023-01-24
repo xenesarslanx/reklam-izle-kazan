@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "342826597987",
+    "project_id": "reklamizlekazan-8db84",
+    "storage_bucket": "reklamizlekazan-8db84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342826597987:android:760c050f3e39c459f80256",
+        "android_client_info": {
+          "package_name": "com.example.reklamizlekazan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342826597987-ui0ibjl1efn49m6kuv45ukh7ao6i94ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASg6B9goIamAWs-wFbeQQfscpZgysIJr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342826597987-ui0ibjl1efn49m6kuv45ukh7ao6i94ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

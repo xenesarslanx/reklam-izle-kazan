@@ -71,14 +71,16 @@ class MyAppBarWidget extends PreferredSize {
    ElevatedButton buttonMethod(
     onpressed, 
     Color color,
-    EdgeInsetsGeometry? hor,
-    Widget widget)
-    {
+    EdgeInsetsGeometry hor,
+    Widget widget,
+    [double? elevation]
+    ){
       return ElevatedButton(
             onPressed: onpressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: color,
-              padding: hor,
+            elevation: elevation,
+            backgroundColor: color,
+            padding: hor,
                   shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)),
             ),
