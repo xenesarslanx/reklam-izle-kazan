@@ -41,6 +41,8 @@ dependencies:
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
 
+  google_mobile_ads: ^2.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

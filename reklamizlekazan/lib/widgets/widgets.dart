@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
  class MySizedBoxWidget extends StatelessWidget {
   double? height;
@@ -22,7 +23,7 @@ MySizedBoxWidget(
 }
 
 class MyAppBarWidget extends PreferredSize {
-       Size size;
+       Size? size;
       List<Widget>? actions;
       Color? backgroundColor;
       Widget title;
@@ -30,8 +31,8 @@ class MyAppBarWidget extends PreferredSize {
        // this.actions,
         this.backgroundColor, 
         this.title,
-        this.size,
-        {super.key}) : super(child: title , preferredSize: size);
+       // this.size,
+        {super.key}) : super(child: title , preferredSize: Size(Get.width/15, Get.height/15));
 
   @override
   Widget build(BuildContext context) {
@@ -87,3 +88,4 @@ class MyAppBarWidget extends PreferredSize {
             child: widget,
              );
   }
+  
