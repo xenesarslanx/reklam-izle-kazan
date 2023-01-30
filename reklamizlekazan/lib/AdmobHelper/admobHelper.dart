@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:reklamizlekazan/firebaseOptions.dart';
+import 'package:reklamizlekazan/payRequest.dart';
+import 'package:reklamizlekazan/puanKontrol.dart';
 import 'package:reklamizlekazan/watchAdd.dart';
 
 abstract class Admob {
@@ -54,7 +57,7 @@ class RealId implements Admob {
 
 class TestId implements Admob {
   @override
-  String bannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+  String bannerAdUnitId = 'ca-app-pub-2940256099942544/6300978111';
 
   @override
   String rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
@@ -63,25 +66,14 @@ class TestId implements Admob {
   String interstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
 }
 
-  
-  
-
-
-
-
-
-
-
-
-  class BannerAdmob extends StatefulWidget{
+class BannerAdmob extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _BannerAdmobState();
   }
 }
 
-class _BannerAdmobState extends State<BannerAdmob>{
-
+class _BannerAdmobState extends State<BannerAdmob> {
   late BannerAd ad;
   bool isLoaded = false;
 
@@ -93,7 +85,7 @@ class _BannerAdmobState extends State<BannerAdmob>{
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
-        onAdLoaded: (_) {
+        onAdLoaded: (ad) {
           setState(() {
             isLoaded = true;
             print("1111111111111111111111111111111111111111111111");
@@ -103,7 +95,6 @@ class _BannerAdmobState extends State<BannerAdmob>{
           setState(() {
             isLoaded = false;
             print("222222222222222222222222222222222222222222222222");
-
           });
           ad.dispose();
         },
@@ -120,75 +111,117 @@ class _BannerAdmobState extends State<BannerAdmob>{
 
   @override
   Widget build(BuildContext context) {
-    return isLoaded?
-    SizedBox(
-      child: AdWidget(ad: ad),
-    ):Container();
+    return isLoaded
+        ? SizedBox(
+            child: AdWidget(ad: ad),
+          )
+        : Container();
   }
 }
 
 class RewardedAdmob extends StatefulWidget {
-
   @override
-  State<RewardedAdmob> createState() => _RewardedAdmobState();
+  State<RewardedAdmob> createState() => RewardedAdmobState();
 }
 
-class _RewardedAdmobState extends State<RewardedAdmob> {
-   late RewardedAd _rewardedAd;
-  bool _isRewardedAdReady = false;
-
+class RewardedAdmobState extends State<RewardedAdmob> {
+  late RewardedAd _rewardedAd;
+  bool _isRewardedAdReady = true;
+  //FirebaseOptions firebaseOptions = FirebaseOptions();
+  OdemeTalebiSayfasiState odm  = OdemeTalebiSayfasiState();
   @override
-  void initState(){
-super.initState();
-  RewardedAd.load(
-       adUnitId: TestId().rewardedAdUnitId,
+  void initState() {
+    UserInformation();//
+    super.initState();
+    RewardedAd.load(
+        adUnitId: TestId().rewardedAdUnitId,
         request: const AdRequest(),
-         rewardedAdLoadCallback: RewardedAdLoadCallback(onAdLoaded: (ad){
-           _rewardedAd = ad;
-           _isRewardedAdReady = true;
-           print("444444444");
-         },
-          onAdFailedToLoad:(error){
-           print("5555555555555");
+        rewardedAdLoadCallback:
+            RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
+          _isRewardedAdReady = true;
+          _rewardedAd = ad;
+          print("444444444");
+        }, onAdFailedToLoad: (error) {
+          print("5555555555555");
+          _isRewardedAdReady = false;
 
-          }
-         ));
-}
-@override
+         dispose();
+     }));
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _rewardedAd.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-   return _isRewardedAdReady
-? ElevatedButton(
-onPressed:(() => 
-_rewardedAd.show(
-  onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {  
-    Get.to(const ReklamIzlemeSayfasi());
-  })
-),
-child: const Text('Bas ve İzle'),
-)
-: Container(
-  color: Colors.red,
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children:  [
-      ElevatedButton(
-        onPressed: (){Get.to(const ReklamIzlemeSayfasi());},//get to get of komutlarını yerlestır,//get to get of komutlarını yerlestır,//get to get of komutlarını yerlestır
-         child:  const Text("Şuanlık Reklam Yok Daha Sonra Tekrar Deneyin",style:
-       TextStyle(
-        color: Colors.black,
-        fontSize: 22,
+    return ElevatedButton(
+            onPressed: (() {
+       
+              setState(()  async { 
+                if(_isRewardedAdReady == true) {
+            await  _rewardedAd.show(
+                   onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+                    
+                  Get.offAll(const ReklamIzlemeSayfasi());
+            // FirebaseOptions.puan++;
+             print("sayfa kapatildi2");
+                }); 
+                
+          
+            PuanTut.puanKontrol++;
+           // PuanTut.puan++;   
+             
+             print("puan artt33${PuanTut.puan}");
 
-        ),))
-      
-    ],
-  ),
-);    
+              FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
+          
+             print("koleksiyona kaydeedildiiiiiiii");
+
+                }else{
+                print("calısmadı");
+                   
+                }
+             });
+            
+            }),
+            child: const Text('Bas ve İzle'),
+          );
+             
+ /*   _isRewardedAdReady == true
+        ? ElevatedButton(
+            onPressed: (() {
+              setState(() {
+                _rewardedAd.show(
+                    onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+                  Get.offAll(const ReklamIzlemeSayfasi());
+                 // firebaseOptions.puan += 1;
+                 // print("puan verildiiiiiiiiiiiiiiiiiiiiiiiii${firebaseOptions.puan}");
+                });
+              });
+            }),
+            child: const Text('Bas ve İzle'),
+          )
+        : Container(
+            color: Colors.red,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Get.offAll(const ReklamIzlemeSayfasi());
+                    }, //get to get of komutlarını yerlestır,//get to get of komutlarını yerlestır,//get to get of komutlarını yerlestır
+                    child: const Text(
+                      "Şuanlık Reklam Yok Daha Sonra Tekrar Deneyin",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                      ),
+                    ))
+              ],
+            ),
+          );*/
   }
 }

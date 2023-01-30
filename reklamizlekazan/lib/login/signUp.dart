@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
@@ -14,6 +16,9 @@ class KayitOl extends StatefulWidget {
 
 class _KayitOlState extends State<KayitOl> {
   FirebaseOptions firebaseoptions = FirebaseOptions();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('users');
   String firebaseUyari = "";
   bool sifre = true;
 
@@ -30,6 +35,11 @@ class _KayitOlState extends State<KayitOl> {
     } catch (e) {
       firebaseUyari = e.toString().substring(30);
     }
+    collectionReference.doc(auth.currentUser!.email.toString())
+    .set({
+      'iban': "",
+      'puan': 0,
+      });
   }
 
   girisYap() {
@@ -37,11 +47,27 @@ class _KayitOlState extends State<KayitOl> {
         .signInWithEmailAndPassword(email: t1.text, password: t2.text)
         .then((value) {
       if (t1.text == "test@gmail.com" && t2.text == "123456") {
-        Get.off(const OdemeTalebiSayfasi());
+        Get.off( const OdemeTalebiSayfasi());
       } else {
         Get.off(const AnaMenu());
       }
     });
+  }
+
+  @override
+  void initState() {
+      firebaseoptions.auth
+  .authStateChanges()
+  .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+       Get.offAll(const AnaMenu());
+      print('User is signed in!');
+      
+    }
+  });
+    super.initState();
   }
 
   @override
@@ -52,6 +78,7 @@ class _KayitOlState extends State<KayitOl> {
         appBar: MyAppBarWidget(
           Colors.redAccent,
           const Text("Kayıt Ol Ve Giriş Yap"),
+          null
         ),
         body: SingleChildScrollView(
           child: MySizedBoxWidget(

@@ -24,21 +24,23 @@ MySizedBoxWidget(
 
 class MyAppBarWidget extends PreferredSize {
        Size? size;
-      List<Widget>? actions;
       Color? backgroundColor;
       Widget title;
+       Widget? leading;
       MyAppBarWidget(
-       // this.actions,
         this.backgroundColor, 
         this.title,
+       // this.actions,
+        this.leading,
        // this.size,
-        {super.key}) : super(child: title , preferredSize: Size(Get.width/15, Get.height/15));
+        {super.key}) : super(child: title , preferredSize: Size(Get.width/15, Get.height/15),);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
      backgroundColor: backgroundColor,
      title: title,
+     leading: leading,
     );
   }
 }

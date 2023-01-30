@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reklamizlekazan/AdmobHelper/admobHelper.dart';
+import 'package:reklamizlekazan/firebaseOptions.dart';
+import 'package:reklamizlekazan/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
+import 'mainMenu.dart';
+
 class OdemeTalebiSayfasi extends StatefulWidget {
-  const OdemeTalebiSayfasi({super.key});
+  
+
+   const OdemeTalebiSayfasi({super.key});
 
   @override
-  State<OdemeTalebiSayfasi> createState() => _OdemeTalebiSayfasiState();
+  State<OdemeTalebiSayfasi> createState() => OdemeTalebiSayfasiState();
 }
 
-class _OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
+class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
   TextEditingController textFieldKayit = TextEditingController();
-  String kayitliIban = "";
+  UserInformationState user = UserInformationState();
+  String kayitliIban  = "";
+  @override
+  void initState() {
+    UserInformation();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,6 +33,12 @@ class _OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
         appBar: MyAppBarWidget(
           Colors.amber,
           const Text("IBAN Bilgileri"),
+          IconButton(
+      icon:  const Icon(Icons.arrow_back),
+      onPressed: () {
+        Get.offAll(const AnaMenu());
+      },
+    ),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -49,7 +67,7 @@ class _OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                           controller: textFieldKayit,
                           onChanged: (text) {
                             setState(() {
-                               kayitliIban = text;
+                              kayitliIban = text.toString();
                             });
                           },
                           decoration: const InputDecoration(
@@ -66,14 +84,26 @@ class _OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                       ),
                      const SizedBox(height: 20,),
                       buttonMethod(
-                        null,
+                        (){
+                          setState(() {
+                            
+                  FirebaseOptions().koleksiyonaKaydetIban(kayitliIban);
+                           
+                          });
+                  
+                        print("basarılı");
+                          },
                          Colors.orangeAccent,
                           const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                            const Text("Kaydet"),),
+
+
                            const SizedBox(height: 20,),
-                            Text("Kayıtlı IBAN: TR$kayitliIban"),
+                          UserInformation(),
                            const SizedBox(height: 20,),
-                            const Text("Puan : 0"),
+
+                PuanTut.puan == 0 ? const Text("Puan: -") :
+                            UserInformation2(),
                     ],
                   ),
                 ),
@@ -82,6 +112,7 @@ class _OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      
                       MySizedBoxWidget(
                           50, 320,  BannerAdmob(),
                     ), //banner gelecek
