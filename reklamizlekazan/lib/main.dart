@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:reklamizlekazan/login/signUp.dart';
+import 'package:reklamizlekazan/onboarding/onboarding.dart';
 import 'firebase_options.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         splashIconSize: 400,
         splashTransition: SplashTransition.scaleTransition,
-         nextScreen: const KayitOl(),
+         nextScreen:  OnboardingIntro(),
 )
     );
   }

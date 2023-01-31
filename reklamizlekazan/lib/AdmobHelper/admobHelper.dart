@@ -57,7 +57,7 @@ class RealId implements Admob {
 
 class TestId implements Admob {
   @override
-  String bannerAdUnitId = 'ca-app-pub-2940256099942544/6300978111';
+  String bannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
 
   @override
   String rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";

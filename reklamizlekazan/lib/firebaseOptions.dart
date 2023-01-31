@@ -25,7 +25,7 @@ class FirebaseOptions {
 
 
   odemeTalebi(){
-  if(PuanTut.puan > 1){
+  if(PuanTut.puan > 100){
   FirebaseFirestore.instance.collection('Request')
   .doc(auth.currentUser!.email.toString())
   .set({
@@ -194,7 +194,7 @@ class _YuksekPuanlilarState extends State<YuksekPuanlilar> {
         return 
         Scaffold(
           appBar: MyAppBarWidget(
-            Colors.blue,
+            Colors.red,
              const Text("En Yüksek Puana Sahip Kişiler",),
                  IconButton(
       icon:  const Icon(Icons.arrow_back),
@@ -213,13 +213,15 @@ class _YuksekPuanlilarState extends State<YuksekPuanlilar> {
                 borderRadius: BorderRadius.circular(30),
                 color: const Color.fromARGB(184, 15, 233, 135),
               ),
-              child: ListTile(
-                title: Text("***${document.id.substring(3)}",
-                style: const TextStyle(color: Colors.black,
-                    fontSize: 17,),),
-                leading: Text("Puan:${document['puan']}",
-                style: const TextStyle(color: Colors.black,
-                      fontSize: 20,)),
+              child: SingleChildScrollView(
+                child: ListTile(
+                  title: Text("***${document.id.substring(3)}",
+                  style: const TextStyle(color: Colors.black,
+                      fontSize: 17,),),
+                  leading: Text("Puan:${document['puan']}",
+                  style: const TextStyle(color: Colors.black,
+                        fontSize: 20,)),
+                ),
               ),
             );
           },

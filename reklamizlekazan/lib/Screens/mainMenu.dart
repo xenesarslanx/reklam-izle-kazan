@@ -23,9 +23,10 @@ class _AnaMenuState extends State<AnaMenu> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        //backgroundColor: Colors.yellow.shade400,
         appBar: MyAppBarWidget(
-          Colors.amber,
-          const Text("Ana Menü Sayfası"),
+          Colors.yellow.shade600,
+          const Text("Ana Menü"),
           null,
         ),
         //AppBar(title: const Text("Ana Menü Sayfası"),),
@@ -41,7 +42,7 @@ class _AnaMenuState extends State<AnaMenu> {
                   padding: const EdgeInsets.all(20.0),
                   child: buttonMethod(
                     () => Get.offAll(const ReklamIzlemeSayfasi()),
-                    Colors.red,
+                    Colors.blueAccent,
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     const Text("Reklam İzle"),
                   ),
@@ -61,26 +62,15 @@ class _AnaMenuState extends State<AnaMenu> {
                   padding: const EdgeInsets.all(20.0),
                   child: buttonMethod(
                     () => Get.offAll( const OdemeTalebiSayfasi()),
-                    Colors.red,
+                    Colors.greenAccent,
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     const Text("Ödeme Talep Et"),
                   ),
                 ),
 
-                 /*Text(
-                  "Puanım:  ${FirebaseOptions.puan}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),*/
                 PuanTut.puan == null ? const Text("Puan: -") :
                       UserInformation2(),
                     
-                      
-               // UserInformation2(),                
-
                 Padding(
                   padding:  EdgeInsets.fromLTRB(0,Get.height/4,0,0),
                   child: Column(

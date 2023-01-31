@@ -20,8 +20,9 @@ class _ReklamIzlemeSayfasiState extends State<ReklamIzlemeSayfasi> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.green.shade100,
         appBar: MyAppBarWidget(
-          Colors.amber,
+          Colors.blueAccent,
           const Text("Reklam İzleme Sayfası"),
         
     IconButton(

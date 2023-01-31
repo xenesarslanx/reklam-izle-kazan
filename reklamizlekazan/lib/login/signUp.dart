@@ -88,9 +88,7 @@ Future checkEmailVerified() async {
     await firebaseoptions.auth
         .signInWithEmailAndPassword(email: t1.text, password: t2.text)
         .then((value) {
-      if (t1.text == "test@gmail.com" && t2.text == "123456") {
-        Get.off( const AnaMenu());
-      }else if (isEmailVerified == true) {
+       if (isEmailVerified == true) {
         print("calısması lazım");
         Get.off(const AnaMenu());
       }
@@ -207,7 +205,7 @@ Future checkEmailVerified() async {
                 },
                 child: const Text("Şifremi Unuttum"),
               ),
-              Text(firebaseUyari),
+             
             ]),
           ),
         ),

@@ -31,7 +31,7 @@ class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
     return SafeArea(
       child: Scaffold(
         appBar: MyAppBarWidget(
-          Colors.amber,
+          Colors.greenAccent,
           const Text("IBAN Bilgileri"),
           IconButton(
       icon:  const Icon(Icons.arrow_back),
@@ -110,12 +110,11 @@ class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                          Colors.greenAccent, 
                           const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                            const Text("Ödeme Talep Et")),
-
-                            
+                          const SizedBox(height: 15,),
                     ],
                   ),
                 ),
-                Padding(
+               /* Padding(
                   padding:  EdgeInsets.fromLTRB(0,Get.height/7,0,0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -127,7 +126,7 @@ class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                           
                     ],
                   ),
-                )
+                ),*/
               ]),
         ),
       ),
