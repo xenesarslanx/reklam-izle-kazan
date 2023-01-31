@@ -2,24 +2,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reklamizlekazan/puanKontrol.dart';
+import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
-import 'mainMenu.dart';
+import 'Screens/mainMenu.dart';
 
 class FirebaseOptions {
   
   FirebaseAuth auth = FirebaseAuth.instance;
+
+
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
  
-  sifremiUnuttum() async {
-    await FirebaseAuth.instance
-        .sendPasswordResetEmail(email: auth.currentUser!.email.toString());
+  sifremiUnuttum(String mail) async {
+    await auth
+        .sendPasswordResetEmail(email: mail);
     Get.defaultDialog(
         middleText: "sonra şifrenizi sıfırlayın",
         title: "Mailinizi Kontrol Edin!");
   }
+
+
+  odemeTalebi(){
+  if(PuanTut.puan > 1){
+  FirebaseFirestore.instance.collection('Request')
+  .doc(auth.currentUser!.email.toString())
+  .set({
+    'iban': UserInformationState.vtIban,
+    'puan': UserInformation2State.vtPuan,
+  });
+ }else{Get.defaultDialog(title: "Puanın Yetersiz", middleText: "Puanın 100'den fazla olmalı");}
+  }
+
+
 
   koleksiyonaKaydetIban(String kayitliIban) {
     if(kayitliIban == ""){
@@ -66,7 +82,7 @@ class UserInformation extends StatefulWidget {
 
 class UserInformationState extends State<UserInformation> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  String? vtIban;
+ static String? vtIban;
 
   final Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance
       .collection('users')
@@ -107,7 +123,7 @@ class UserInformation2 extends StatefulWidget {
 
 class UserInformation2State extends State<UserInformation2> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  String? vtIban;
+  static int? vtPuan;
 
   final Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance
       .collection('users')
@@ -133,13 +149,16 @@ class UserInformation2State extends State<UserInformation2> {
         }
         var names = snapshot.data!.data() as Map<dynamic, dynamic>;
         PuanTut.puan= names['puan'];
-        return //PuanTut.puan == 0 ? const Text("Puan: -") :
+        vtPuan= names['puan'];
+
+        return 
          Text("Puan: ${PuanTut.puan}",
         style: const TextStyle(color: Colors.black,
                     fontSize: 20,),);
       },
     );
-  }
+  } 
+ 
 }
 
 class YuksekPuanlilar extends StatefulWidget {

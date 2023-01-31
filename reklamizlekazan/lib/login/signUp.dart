@@ -1,10 +1,10 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
-import 'package:reklamizlekazan/mainMenu.dart';
-import 'package:reklamizlekazan/payRequest.dart';
+import 'package:reklamizlekazan/Screens/mainMenu.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
 class KayitOl extends StatefulWidget {
@@ -19,21 +19,62 @@ class _KayitOlState extends State<KayitOl> {
   FirebaseAuth auth = FirebaseAuth.instance;
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
+ 
   String firebaseUyari = "";
   bool sifre = true;
 
   TextEditingController t1 = TextEditingController();
   TextEditingController t2 = TextEditingController();
+  
+  bool isEmailVerified = false;
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+  if(FirebaseAuth.instance.currentUser != null){
+   isEmailVerified =  FirebaseAuth.instance.currentUser!.emailVerified;
+   print("initStateiçi$isEmailVerified");
+  }
+    if(!isEmailVerified){
+   sendVerificationEmail();
+  print("satır 42 print");
+    }
+   timer = Timer.periodic(const Duration(seconds: 3),
+   (_) => checkEmailVerified(),
+   );
+    
+  }
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+Future checkEmailVerified() async {
+  await FirebaseAuth.instance.currentUser!.reload();
+  setState(() {
+    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    print("satır 5758 $isEmailVerified");
+  });
+  if(isEmailVerified) timer?.cancel();
+  return isEmailVerified;
+}
+
+  Future sendVerificationEmail()async{
+    final user = FirebaseAuth.instance.currentUser!;
+    await user.sendEmailVerification();
+    Get.defaultDialog(title: "Epostanızı kontrol edin!" , middleText: "Mailinizi Onaylayın!");
+  }
 
   Future<void> kayitOl() async {
     //kayıt ol
+
     try {
       await firebaseoptions.auth.createUserWithEmailAndPassword(
-          email: t1.text, password: t2.text); //kullanıcı kayıtı
-      Get.defaultDialog(
-          middleText: "Şimdi Giriş Yapınız", title: "Kayıt Olundu!");
+          email: t1.text, password: t2.text).then((value) => sendVerificationEmail());
+           
     } catch (e) {
       firebaseUyari = e.toString().substring(30);
+      Get.defaultDialog(middleText: firebaseUyari);
     }
     collectionReference.doc(auth.currentUser!.email.toString())
     .set({
@@ -42,19 +83,25 @@ class _KayitOlState extends State<KayitOl> {
       });
   }
 
-  girisYap() {
-    firebaseoptions.auth
+  girisYap() async{
+    try{
+    await firebaseoptions.auth
         .signInWithEmailAndPassword(email: t1.text, password: t2.text)
         .then((value) {
       if (t1.text == "test@gmail.com" && t2.text == "123456") {
-        Get.off( const OdemeTalebiSayfasi());
-      } else {
+        Get.off( const AnaMenu());
+      }else if (isEmailVerified == true) {
+        print("calısması lazım");
         Get.off(const AnaMenu());
       }
+         print("calısmadı");
     });
+    }catch (e){
+      Get.defaultDialog(middleText: e.toString().substring(30));
+    }
+  print("giris yap fonk $isEmailVerified");
   }
-
-  @override
+ /* @override
   void initState() {
       firebaseoptions.auth
   .authStateChanges()
@@ -68,7 +115,7 @@ class _KayitOlState extends State<KayitOl> {
     }
   });
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +174,7 @@ class _KayitOlState extends State<KayitOl> {
                 height: 20,
               ),
               buttonMethod(
-                () => setState(() {
+                () => setState(()  {
                   kayitOl();
                 }),
                 Colors.red,
@@ -138,9 +185,10 @@ class _KayitOlState extends State<KayitOl> {
                 height: 15,
               ),
               buttonMethod(
-                () => setState(() {
+                () {
                   girisYap();
-                }),
+                }, 
+                
                 Colors.redAccent,
                 const EdgeInsets.all(25),
                 const Text("Giriş Yap"),
@@ -150,9 +198,14 @@ class _KayitOlState extends State<KayitOl> {
               ),
               TextButton(
                 onPressed: () {
-                  firebaseoptions.sifremiUnuttum();
+                  if(t1.text.isEmail ){
+                  firebaseoptions.sifremiUnuttum(t1.text);
+                  Get.defaultDialog(middleText: "Epostanıza Gelen Şifre Değiştirme Talebini Onaylayın Ve Şifrenizi Değiştirin");
+                  }else{
+                  Get.defaultDialog(middleText: "Email Kısmına Mailinizi Yazın Ve Sonra 'Şifremi Unuttum'a Basın");
+                  }
                 },
-                child: const Text("Şifremi unuttum"),
+                child: const Text("Şifremi Unuttum"),
               ),
               Text(firebaseUyari),
             ]),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reklamizlekazan/AdmobHelper/admobHelper.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
-import 'package:reklamizlekazan/mainMenu.dart';
-import 'package:reklamizlekazan/puanKontrol.dart';
+import 'package:reklamizlekazan/Screens/mainMenu.dart';
+import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
-import 'AdmobHelper/admobHelper.dart';
 
 class ReklamIzlemeSayfasi extends StatefulWidget {
   const ReklamIzlemeSayfasi({super.key});

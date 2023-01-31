@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reklamizlekazan/AdmobHelper/admobHelper.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
-import 'package:reklamizlekazan/puanKontrol.dart';
+import 'package:reklamizlekazan/Screens/mainMenu.dart';
+import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
-import 'mainMenu.dart';
 
 class OdemeTalebiSayfasi extends StatefulWidget {
   
@@ -104,6 +104,14 @@ class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
 
                 PuanTut.puan == 0 ? const Text("Puan: -") :
                             UserInformation2(),
+                            const SizedBox(height: 20,),
+                       buttonMethod(
+                        (){FirebaseOptions().odemeTalebi();},
+                         Colors.greenAccent, 
+                          const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                           const Text("Ödeme Talep Et")),
+
+                            
                     ],
                   ),
                 ),

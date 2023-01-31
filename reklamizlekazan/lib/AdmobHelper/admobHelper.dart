@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:reklamizlekazan/Screens/payRequest.dart';
+import 'package:reklamizlekazan/Screens/watchAdd.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
-import 'package:reklamizlekazan/payRequest.dart';
-import 'package:reklamizlekazan/puanKontrol.dart';
-import 'package:reklamizlekazan/watchAdd.dart';
+import 'package:reklamizlekazan/controller/puanKontrol.dart';
 
 abstract class Admob {
   String get bannerAdUnitId;

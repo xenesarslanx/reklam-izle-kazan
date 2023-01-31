@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reklamizlekazan/Screens/payRequest.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
-import 'package:reklamizlekazan/payRequest.dart';
-import 'package:reklamizlekazan/puanKontrol.dart';
-import 'package:reklamizlekazan/watchAdd.dart';
+import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
-import 'AdmobHelper/admobHelper.dart';
+import '../AdmobHelper/admobHelper.dart';
+import 'watchAdd.dart';
 
 class AnaMenu extends StatefulWidget {
   const AnaMenu({super.key});

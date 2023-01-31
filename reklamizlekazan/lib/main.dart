@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:reklamizlekazan/login/signUp.dart';
 import 'firebase_options.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,10 +19,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: 
-      KayitOl(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset(
+          "lib/images/logom.png"
+        ),
+        backgroundColor: Colors.white,
+        splashIconSize: 400,
+        splashTransition: SplashTransition.scaleTransition,
+         nextScreen: const KayitOl(),
+)
     );
   }
 }
