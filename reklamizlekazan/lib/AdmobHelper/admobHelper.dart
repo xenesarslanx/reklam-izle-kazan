@@ -134,7 +134,7 @@ class RewardedAdmobState extends State<RewardedAdmob> {
     UserInformation(); //
     super.initState();
     RewardedAd.load(
-        adUnitId: RealId().rewardedAdUnitId,
+        adUnitId: TestId().rewardedAdUnitId,
         request: const AdRequest(),
         rewardedAdLoadCallback:
             RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
@@ -157,45 +157,58 @@ class RewardedAdmobState extends State<RewardedAdmob> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: Get.height,
-      width: Get.width,
-      color: Colors.white60,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: (() {
-              setState(() async {
-                if (_isRewardedAdReady == true) {
-                  await _rewardedAd.show(
-                      onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-                    Get.offAll(const ReklamIzlemeSayfasi());
-                    // FirebaseOptions.puan++;
-                    print("sayfa kapatildi2");
-                  });
-
-                  PuanTut.puanKontrol++;
-                  // PuanTut.puan++;
-
-                  print("puan artt33${PuanTut.puan}");
-
-                  FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
-
-                  print("koleksiyona kaydeedildiiiiiiii");
-                } else {
-                  print("calısmadı else");
-                  Get.off(const AnaMenu());
-                  print("defaultmesajıııııı");
-                  Get.defaultDialog(middleText: "Şuanlık Reklam Yok Az Sonra Tekrar Dene");
-                }
-              });
-            }),
-            child: const Text('Bas ve İzle'),
-          ),
-        ],
+    return Scaffold(
+            appBar: AppBar(
+              title: const Text("Bas Ve İzle"),
+              leading:  IconButton(
+              icon : const Icon(Icons.arrow_back),
+              onPressed: () {
+                Get.to(const ReklamIzlemeSayfasi());
+              },
+            ),
+            
+            ),
+     body:  Container(
+        height: Get.height,
+        width: Get.width,
+        color: Colors.white60,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: (() {
+                setState(() async {
+                  if (_isRewardedAdReady == true) {
+                    await _rewardedAd.show(
+                        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+                      Get.offAll(const ReklamIzlemeSayfasi());
+                      // FirebaseOptions.puan++;
+                      print("sayfa kapatildi2");
+                    });
+    
+                    PuanTut.puanKontrol++;
+                    // PuanTut.puan++;
+    
+                    print("puan artt33${PuanTut.puan}");
+    
+                    FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
+    
+                    print("koleksiyona kaydeedildiiiiiiii");
+                  } else {
+                    print("calısmadı else");
+                    Get.off(const AnaMenu());
+                    print("defaultmesajıııııı");
+                    Get.defaultDialog(middleText: "Şuanlık Reklam Yok Az Sonra Tekrar Dene");
+                  }
+                });
+              }),
+              child: const Text('Bas ve İzle'),
+            ),
+          ],
+        ),
       ),
-    );
+      );
+    
 
     /*   _isRewardedAdReady == true
         ? ElevatedButton(

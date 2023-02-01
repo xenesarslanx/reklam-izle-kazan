@@ -38,14 +38,14 @@ class FirebaseOptions {
   koleksiyonaKaydetIban(String kayitliIban) {
     if (kayitliIban == "") {
       Get.snackbar("Iban Boş Olamaz", "Lütfen Bir Değer Giriniz");
-    } else if (kayitliIban == null) {
-      collectionReference.doc(auth.currentUser!.email.toString()).set({
+    } else  {
+      collectionReference.doc(auth.currentUser!.email.toString()).update({
         'iban': kayitliIban,
       });
     }
-    collectionReference.doc(auth.currentUser!.email.toString()).update({
+   /* collectionReference.doc(auth.currentUser!.email.toString()).update({
       'iban': kayitliIban,
-    });
+    });*/
   }
 
   koleksiyonaKaydetPuan(int puan) {

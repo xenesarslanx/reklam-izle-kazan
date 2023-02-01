@@ -37,7 +37,7 @@ class _AnaMenuState extends State<AnaMenu> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: buttonMethod(
-                    () => Get.offAll(const ReklamIzlemeSayfasi()),
+                    () => Get.to(const ReklamIzlemeSayfasi()),
                     Colors.blueAccent,
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     const Text("Reklam İzle"),

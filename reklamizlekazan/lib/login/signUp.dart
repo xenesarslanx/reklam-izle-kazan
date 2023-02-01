@@ -47,7 +47,7 @@ class _KayitOlState extends State<KayitOl> {
        firebaseoptions.auth
   .authStateChanges()
   .listen((User? user) async{
-    if (user == null) {
+    if (user!.emailVerified == false) {
       print('User is currently signed out!');
     } else {
      Get.offAll(const AnaMenu());
@@ -88,24 +88,26 @@ Future checkEmailVerified() async {
       firebaseUyari = e.toString().substring(30);
       Get.defaultDialog(middleText: firebaseUyari);
     }
-    collectionReference.doc(auth.currentUser!.email.toString())
-    .set({
-      'iban': "",
-      'puan': 0,
-      });
+   
   }
 
   girisYap() async{
     try{
     await firebaseoptions.auth
         .signInWithEmailAndPassword(email: t1.text, password: t2.text)
-        .then((value) {
+        .then((value) async {
        if (isEmailVerified == true) {
         print("calısması lazım");
         Get.off(const AnaMenu());
+        await collectionReference.doc(auth.currentUser!.email.toString())
+    .set({
+      'iban': "",
+      'puan': 0,
+      });
       }
          print("calısmadı");
     });
+
     }catch (e){
       Get.defaultDialog(middleText: e.toString().substring(30));
     }
@@ -184,9 +186,11 @@ Future checkEmailVerified() async {
                 height: 20,
               ),
               buttonMethod(
-                () => setState(()  {
+                () {
+                  setState(()  {
                   kayitOl();
-                }),
+                });
+                },
                 Colors.red,
                 const EdgeInsets.all(30),
                 const Text("Kayıt Ol"),
