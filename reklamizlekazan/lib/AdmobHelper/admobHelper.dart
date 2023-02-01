@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:get/get.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:reklamizlekazan/Screens/mainMenu.dart';
 import 'package:reklamizlekazan/Screens/payRequest.dart';
 import 'package:reklamizlekazan/Screens/watchAdd.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
@@ -18,7 +18,7 @@ class RealId implements Admob {
   @override
   String get bannerAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-5722581928261637/6605956742';
+      return 'ca-app-pub-5811465192324859/6068649513';
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isWindows) {
@@ -31,7 +31,7 @@ class RealId implements Admob {
   @override
   String get rewardedAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-5722581928261637/6605956742';
+      return 'ca-app-pub-5811465192324859/2713241328';
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isWindows) {
@@ -81,7 +81,7 @@ class _BannerAdmobState extends State<BannerAdmob> {
   void initState() {
     super.initState();
     ad = BannerAd(
-      adUnitId: TestId().bannerAdUnitId,
+      adUnitId: RealId().bannerAdUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -128,13 +128,13 @@ class RewardedAdmobState extends State<RewardedAdmob> {
   late RewardedAd _rewardedAd;
   bool _isRewardedAdReady = true;
   //FirebaseOptions firebaseOptions = FirebaseOptions();
-  OdemeTalebiSayfasiState odm  = OdemeTalebiSayfasiState();
+  OdemeTalebiSayfasiState odm = OdemeTalebiSayfasiState();
   @override
   void initState() {
-    UserInformation();//
+    UserInformation(); //
     super.initState();
     RewardedAd.load(
-        adUnitId: TestId().rewardedAdUnitId,
+        adUnitId: RealId().rewardedAdUnitId,
         request: const AdRequest(),
         rewardedAdLoadCallback:
             RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
@@ -145,8 +145,8 @@ class RewardedAdmobState extends State<RewardedAdmob> {
           print("5555555555555");
           _isRewardedAdReady = false;
 
-         dispose();
-     }));
+          dispose();
+        }));
   }
 
   @override
@@ -157,40 +157,47 @@ class RewardedAdmobState extends State<RewardedAdmob> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return Container(
+      height: Get.height,
+      width: Get.width,
+      color: Colors.white60,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
             onPressed: (() {
-       
-              setState(()  async { 
-                if(_isRewardedAdReady == true) {
-            await  _rewardedAd.show(
-                   onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-                    
-                  Get.offAll(const ReklamIzlemeSayfasi());
-            // FirebaseOptions.puan++;
-             print("sayfa kapatildi2");
-                }); 
-                
-          
-            PuanTut.puanKontrol++;
-           // PuanTut.puan++;   
-             
-             print("puan artt33${PuanTut.puan}");
+              setState(() async {
+                if (_isRewardedAdReady == true) {
+                  await _rewardedAd.show(
+                      onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+                    Get.offAll(const ReklamIzlemeSayfasi());
+                    // FirebaseOptions.puan++;
+                    print("sayfa kapatildi2");
+                  });
 
-              FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
-          
-             print("koleksiyona kaydeedildiiiiiiii");
+                  PuanTut.puanKontrol++;
+                  // PuanTut.puan++;
 
-                }else{
-                print("calısmadı");
-                   
+                  print("puan artt33${PuanTut.puan}");
+
+                  FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
+
+                  print("koleksiyona kaydeedildiiiiiiii");
+                } else {
+                  print("calısmadı else");
+                  Get.off(const AnaMenu());
+                  print("defaultmesajıııııı");
+                  Get.defaultDialog(middleText: "Şuanlık Reklam Yok Az Sonra Tekrar Dene");
                 }
-             });
-            
+              });
             }),
             child: const Text('Bas ve İzle'),
-          );
-             
- /*   _isRewardedAdReady == true
+          ),
+        ],
+      ),
+    );
+
+    /*   _isRewardedAdReady == true
         ? ElevatedButton(
             onPressed: (() {
               setState(() {

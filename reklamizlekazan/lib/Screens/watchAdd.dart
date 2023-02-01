@@ -6,7 +6,6 @@ import 'package:reklamizlekazan/Screens/mainMenu.dart';
 import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
-
 class ReklamIzlemeSayfasi extends StatefulWidget {
   const ReklamIzlemeSayfasi({super.key});
 
@@ -15,7 +14,6 @@ class ReklamIzlemeSayfasi extends StatefulWidget {
 }
 
 class _ReklamIzlemeSayfasiState extends State<ReklamIzlemeSayfasi> {
-  FirebaseOptions firebaseOptions = FirebaseOptions();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,55 +22,58 @@ class _ReklamIzlemeSayfasiState extends State<ReklamIzlemeSayfasi> {
         appBar: MyAppBarWidget(
           Colors.blueAccent,
           const Text("Reklam İzleme Sayfası"),
-        
-    IconButton(
-      icon:  const Icon(Icons.arrow_back),
-      onPressed: () {
-        Get.offAll(const AnaMenu());
-      },
-    ),   
-       
-       
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Get.offAll(const AnaMenu());
+            },
+          ),
         ),
         body: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               MySizedBoxWidget(
-                Get.height/1.3,
+                Get.height / 1.3,
                 Get.width,
                 Column(
                   children: [
                     MySizedBoxWidget(
-                        50, 320, BannerAdmob(),), //banner gelecek
+                      50,
+                      320,
+                      BannerAdmob(),
+                    ), //banner gelecek
 
                     Padding(
                       padding: const EdgeInsets.all(30.0),
                       child: buttonMethod(
-                  () {
-                    setState(() {
-                      PuanTut.puanKontrol = 0;
-                      Get.to( RewardedAdmob());
-                    });
-                     },
-
+                        () {
+                          setState(() {
+                            PuanTut.puanKontrol = 0;
+                            Get.to(RewardedAdmob());
+                          });
+                        },
                         Colors.green,
-                        const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                        const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
                         const Text("Reklam İzle"),
-                        
                       ),
                     ),
-                 
-                PuanTut.puan == 0 ? const Text("Puan: -") :
-        UserInformation2(),
+
+                    PuanTut.puan == 0
+                        ? const Text("Puan: -")
+                        : UserInformation2(),
                   ],
-                ),  
+                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children:  [
-
-                   MySizedBoxWidget(50, 320, BannerAdmob(),),//banner 
+                children: [
+                  MySizedBoxWidget(
+                    50,
+                    320,
+                    BannerAdmob(),
+                  ), //banner
                 ],
               )
             ]),

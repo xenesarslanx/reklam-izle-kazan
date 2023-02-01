@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.reklamizlekazan</string>
+	<string>com.eapp.reklamizlekazan</string>
 	<key>PROJECT_ID</key>
 	<string>reklamizlekazan-8db84</string>
 	<key>STORAGE_BUCKET</key>

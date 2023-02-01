@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     projectId: 'reklamizlekazan-8db84',
     storageBucket: 'reklamizlekazan-8db84.appspot.com',
     iosClientId: '342826597987-ojvdn4kjrhb71cfgql1pv3673halat4g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.reklamizlekazan',
+    iosBundleId: 'com.eapp.reklamizlekazan',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,6 +77,6 @@ class DefaultFirebaseOptions {
     projectId: 'reklamizlekazan-8db84',
     storageBucket: 'reklamizlekazan-8db84.appspot.com',
     iosClientId: '342826597987-ojvdn4kjrhb71cfgql1pv3673halat4g.apps.googleusercontent.com',
-    iosBundleId: 'com.example.reklamizlekazan',
+    iosBundleId: 'com.eapp.reklamizlekazan',
   );
 }

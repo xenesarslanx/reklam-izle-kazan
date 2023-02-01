@@ -43,6 +43,18 @@ class _KayitOlState extends State<KayitOl> {
    (_) => checkEmailVerified(),
    );
     
+
+       firebaseoptions.auth
+  .authStateChanges()
+  .listen((User? user) async{
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+     Get.offAll(const AnaMenu());
+      print('User is signed in!');
+      
+    }
+  });
   }
   @override
   void dispose() {
@@ -99,7 +111,7 @@ Future checkEmailVerified() async {
     }
   print("giris yap fonk $isEmailVerified");
   }
- /* @override
+  /*@override
   void initState() {
       firebaseoptions.auth
   .authStateChanges()

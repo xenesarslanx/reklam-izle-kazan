@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.reklamizlekazan">
+    package="com.eapp.reklamizlekazan">
    <application
         android:label="reklamizlekazan"
         android:name="${applicationName}"
@@ -37,6 +37,6 @@
             android:value="2" />
                         <meta-data
          android:name="com.google.android.gms.ads.APPLICATION_ID"
-         android:value="ca-app-pub-5722581928261637~1473296987"/>
+         android:value="ca-app-pub-5811465192324859~3634057865"/>
     </application>
 </manifest>

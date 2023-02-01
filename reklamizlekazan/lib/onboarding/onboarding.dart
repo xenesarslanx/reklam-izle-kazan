@@ -6,14 +6,13 @@ import 'package:reklamizlekazan/login/signUp.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
 
 class OnboardingIntro extends StatefulWidget {
-
   @override
   State<OnboardingIntro> createState() => _OnboardingIntroState();
 }
 
 class _OnboardingIntroState extends State<OnboardingIntro> {
   FirebaseOptions firebaseoptions = FirebaseOptions();
- static double? yukseklik = Get.height/2.5;
+  static double? yukseklik = Get.height / 2.6;
   List<Introduction> list = [
     Introduction(
       title: 'Kayıt Ol',
@@ -44,25 +43,25 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-        body: MySizedBoxWidget(Get.height, Get.width,
-         IntroScreenOnboarding(
-          introductionList: list,
-          onTapSkipButton: () {
-            Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const KayitOl(),
-            ), 
-          );
-          },
-          
+        child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: MySizedBoxWidget(
+          Get.height,
+          Get.width,
+          IntroScreenOnboarding(
+            introductionList: list,
+            onTapSkipButton: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const KayitOl(),
+                ),
+              );
+            },
+          ),
         ),
       ),
-      ),
-      )
-    );
+    ));
   }
 }

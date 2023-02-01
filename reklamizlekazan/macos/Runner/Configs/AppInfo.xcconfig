@@ -8,7 +8,7 @@
 PRODUCT_NAME = reklamizlekazan
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.reklamizlekazan
+PRODUCT_BUNDLE_IDENTIFIER = com.eapp.reklamizlekazan
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.eapp. All rights reserved.

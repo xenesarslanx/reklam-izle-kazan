@@ -4,7 +4,6 @@ import 'package:reklamizlekazan/Screens/payRequest.dart';
 import 'package:reklamizlekazan/firebaseOptions.dart';
 import 'package:reklamizlekazan/controller/puanKontrol.dart';
 import 'package:reklamizlekazan/widgets/widgets.dart';
-
 import '../AdmobHelper/admobHelper.dart';
 import 'watchAdd.dart';
 
@@ -15,11 +14,9 @@ class AnaMenu extends StatefulWidget {
   State<AnaMenu> createState() => _AnaMenuState();
 }
 
-class _AnaMenuState extends State<AnaMenu> {   
-  FirebaseOptions firebaseOptions = FirebaseOptions();
+class _AnaMenuState extends State<AnaMenu> {
   @override
   Widget build(BuildContext context) {
-  
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -35,8 +32,7 @@ class _AnaMenuState extends State<AnaMenu> {
             Get.width,
             Column(
               children: [
-                MySizedBoxWidget(
-                    50, 320,  BannerAdmob()), //banner gelecek
+                MySizedBoxWidget(50, 320, BannerAdmob()), //banner gelecek
 
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -61,28 +57,26 @@ class _AnaMenuState extends State<AnaMenu> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: buttonMethod(
-                    () => Get.offAll( const OdemeTalebiSayfasi()),
+                    () => Get.offAll(const OdemeTalebiSayfasi()),
                     Colors.greenAccent,
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     const Text("Ödeme Talep Et"),
                   ),
                 ),
 
-                PuanTut.puan == null ? const Text("Puan: -") :
-                      UserInformation2(),
-                    
+                PuanTut.puan == null
+                    ? const Text("Puan: -")
+                    : UserInformation2(),
+
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(0,Get.height/4,0,0),
+                  padding: EdgeInsets.fromLTRB(0, Get.height / 4, 0, 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      
-                      MySizedBoxWidget(
-                      50, 320, BannerAdmob()), //banner gelecek
+                      MySizedBoxWidget(50, 320, BannerAdmob()), //banner gelecek
                     ],
                   ),
                 ),
-               
               ],
             )),
       ),

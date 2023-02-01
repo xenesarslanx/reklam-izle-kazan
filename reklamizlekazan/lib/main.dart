@@ -20,16 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AnimatedSplashScreen(
-        splash: Image.asset(
-          "lib/images/logom.png"
-        ),
-        backgroundColor: Colors.white,
-        splashIconSize: 400,
-        splashTransition: SplashTransition.scaleTransition,
-         nextScreen:  OnboardingIntro(),
-)
-    );
+        debugShowCheckedModeBanner: false,
+        home: AnimatedSplashScreen(
+          splash: Image.asset("lib/images/logom.png"),
+          backgroundColor: Colors.white,
+          splashIconSize: 400,
+          splashTransition: SplashTransition.scaleTransition,
+          nextScreen: OnboardingIntro(),
+        ));
   }
 }
