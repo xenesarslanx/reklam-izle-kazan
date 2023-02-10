@@ -127,6 +127,7 @@ class RewardedAdmob extends StatefulWidget {
 class RewardedAdmobState extends State<RewardedAdmob> {
   late RewardedAd _rewardedAd;
   bool _isRewardedAdReady = true;
+ 
   //FirebaseOptions firebaseOptions = FirebaseOptions();
   OdemeTalebiSayfasiState odm = OdemeTalebiSayfasiState();
   @override
@@ -134,7 +135,7 @@ class RewardedAdmobState extends State<RewardedAdmob> {
     UserInformation(); //
     super.initState();
     RewardedAd.load(
-        adUnitId: TestId().rewardedAdUnitId,
+        adUnitId: RealId().rewardedAdUnitId,
         request: const AdRequest(),
         rewardedAdLoadCallback:
             RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
@@ -142,6 +143,7 @@ class RewardedAdmobState extends State<RewardedAdmob> {
           _rewardedAd = ad;
           print("444444444");
         }, onAdFailedToLoad: (error) {
+          Get.defaultDialog(middleText: "Reklam yok ");
           print("5555555555555");
           _isRewardedAdReady = false;
 
@@ -175,25 +177,39 @@ class RewardedAdmobState extends State<RewardedAdmob> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+          //  const Text("Reklam izlendikten 4 dakika sonra diğer reklam aktif olmaktadır."),
+            const SizedBox(height: 20,),
             ElevatedButton(
-              onPressed: (() {
+              onPressed: 
+             PuanTut.buttonEnabled ?
+              (() {
                 setState(() async {
+                  
                   if (_isRewardedAdReady == true) {
-                    await _rewardedAd.show(
+
+                    await _rewardedAd.show(         
                         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+                          setState(() async{
                       Get.offAll(const ReklamIzlemeSayfasi());
+
+                  PuanTut.buttonEnabled = false;
+                          print("butttonnnnnnnnnnnn${PuanTut.buttonEnabled}");
+                          Future.delayed(const Duration(seconds: 60), () {
+                     PuanTut.buttonEnabled = true;
+                          print("butttonnnnnnnnnnnn${PuanTut.buttonEnabled}");
+
+                          } );
+                        });
                       // FirebaseOptions.puan++;
-                      print("sayfa kapatildi2");
+
                     });
-    
+         await Future.delayed(const Duration(seconds: 31), () => print("x saniye sonra çalıştı"));
                     PuanTut.puanKontrol++;
                     // PuanTut.puan++;
     
-                    print("puan artt33${PuanTut.puan}");
-    
                     FirebaseOptions().koleksiyonaKaydetPuan(PuanTut.puan);
-    
                     print("koleksiyona kaydeedildiiiiiiii");
+
                   } else {
                     print("calısmadı else");
                     Get.off(const AnaMenu());
@@ -201,7 +217,9 @@ class RewardedAdmobState extends State<RewardedAdmob> {
                     Get.defaultDialog(middleText: "Şuanlık Reklam Yok Az Sonra Tekrar Dene");
                   }
                 });
-              }),
+              }): (){setState(() {
+                Get.defaultDialog(middleText: "Şuan Reklam Yok 1 dk Sonra Tekrar Deneyin");
+              }); },
               child: const Text('Bas ve İzle'),
             ),
           ],

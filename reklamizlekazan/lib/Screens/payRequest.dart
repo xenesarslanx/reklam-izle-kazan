@@ -16,6 +16,8 @@ class OdemeTalebiSayfasi extends StatefulWidget {
 
 class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
   TextEditingController textFieldKayit = TextEditingController();
+  TextEditingController textFieldKayitIsim = TextEditingController();
+
   String kayitliIban = "";
   @override
   void initState() {
@@ -82,9 +84,33 @@ class OdemeTalebiSayfasiState extends State<OdemeTalebiSayfasi> {
                           ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                 
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextField(
+                        minLines: 1,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.w300),
+                        controller: textFieldKayitIsim,
+                        onChanged: (text) {
+                          setState(() {
+                           PuanTut.adSoyad = text.toString();
+                          });
+                        },
+                        decoration: const InputDecoration(
+                            icon: Icon(
+                                Icons.person), //// alana icon/simge verilebilir
+                            hintText:
+                                "IBAN sahibinin Ad Soyad Girin", //Bir ipucuna stil vermek için, bir hintStyle kullanın. Bir etiketi stillendirmek için, bir labelStyle kullanın.
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.w300, color: Colors.red),
+                            border:
+                                OutlineInputBorder() //TextField öğesine bir sınır vermek için “border” kullanın.
+                            ),
+                      ),
                   ),
+                    const SizedBox(height: 20,),
                   buttonMethod(
                     () {
                       setState(() {

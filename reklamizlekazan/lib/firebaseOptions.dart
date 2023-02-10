@@ -21,17 +21,19 @@ class FirebaseOptions {
   }
 
   odemeTalebi() {
-    if (PuanTut.puan > 100) {
+    if (PuanTut.puan > 100 && PuanTut.adSoyad != "") {
       FirebaseFirestore.instance
           .collection('Request')
           .doc(auth.currentUser!.email.toString())
           .set({
         'iban': UserInformationState.vtIban,
         'puan': UserInformation2State.vtPuan,
+        "isim": PuanTut.adSoyad,
       });
+      Get.defaultDialog(title: "Başarılı", middleText: "Talep iletildi beklemede kalınız");
     } else {
       Get.defaultDialog(
-          title: "Puanın Yetersiz", middleText: "Puanın 100'den fazla olmalı");
+          title: "Puanın Yetersiz", middleText: "Puanın 100'den fazla olmalı ayrıca IBAN sahibini girmelisin");
     }
   }
 
